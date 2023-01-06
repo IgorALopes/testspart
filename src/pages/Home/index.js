@@ -1,13 +1,15 @@
+import style from "./style.module.css"
 import { useState, useEffect } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
-import Pagination from "../../Components/Pagination"
-import PaginationSelector from "../../Components/PaginationSelector"
+import Pagination from "../../Components/Pagination/Pagination"
+import PaginationSelector from "../../Components/PaginationSelector/PaginationSelector"
+import { UserCard } from "../../Components/UserCard/UserCard"
 
 export function Home() {
     
     const [gitHubUsers, setgitHubUsers] = useState([])
-    const [itensPerPage, setItensPerPage] = useState(10)
+    const [itensPerPage, setItensPerPage] = useState(5)
     const [currentPage, setCurrentPage] = useState(0)
     
     const pages = Math.ceil(gitHubUsers.length / itensPerPage);
@@ -39,21 +41,27 @@ export function Home() {
     
     return (
       <>
-        <h1>GitHub Users</h1>
-        {currentUsers.map((currentUser) => {
-          return (
-            <Link to={`/${currentUser.login}/details`}>
-              <p>
-                User login:{currentUser.login} / ID:{currentUser.id}
-              </p>
-            </Link>
-          );
-        })}
-        <PaginationSelector
-          itensPerPage={itensPerPage}
-          setItensPerPage={setItensPerPage}
-        />
-        <Pagination pages={pages} setCurrentPage={setCurrentPage} />
+        <main className={style.main}>
+            <h1>GitHub Users</h1>
+            <PaginationSelector
+              itensPerPage={itensPerPage}
+              setItensPerPage={setItensPerPage}
+            />
+            <div className={style.cards}>
+              {currentUsers.map((currentUser) => {
+                return (
+                  <Link to={`/${currentUser.login}/details`}>
+                    <UserCard
+                      login={currentUser.login}
+                      id={currentUser.id}
+                      avatar_url={currentUser.avatar_url}
+                    />
+                  </Link>
+                );
+              })}
+            </div>
+            <Pagination pages={pages} setCurrentPage={setCurrentPage} />
+        </main>
       </>
     );
 }

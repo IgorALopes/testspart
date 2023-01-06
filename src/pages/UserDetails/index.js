@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 import axios from "axios";
+import style from "./style.module.css"
 
 export function UserDetails() {
   const { login } = useParams();
@@ -23,19 +24,27 @@ export function UserDetails() {
   }, []);
 
   return (
-    <>
-      <h1>GitHub user Details</h1>
-      <h2>{gitHubUser.login}</h2>
-      <p>id: {gitHubUser.id}</p>
-      <p>Created at: {userCreationDate}</p>
-      <p>
-        <a href={gitHubUser.html_url} target="_blank" rel="noreferrer">
-          {gitHubUser.login}'s GitHub Profile
-        </a>
-      </p>
-      <Link to="/">
-        <button type="button">Back</button>
-      </Link>
-    </>
+    <main className={style.main}>
+      <div className={style.details}>
+        <h1>GitHub user Details</h1>
+        <div className={style.avatar}>
+          <img src={gitHubUser.avatar_url} alt="User avatar" />
+        </div>
+        <h2>{gitHubUser.login}</h2>
+        <p>id: {gitHubUser.id}</p>
+        <p>
+          Created at: <br></br>
+          {userCreationDate}
+        </p>
+        <p>
+          <a href={gitHubUser.html_url} target="_blank" rel="noreferrer">
+            {gitHubUser.login}'s GitHub Profile
+          </a>
+        </p>
+        <Link to="/">
+          <button type="button">Back</button>
+        </Link>
+      </div>
+    </main>
   );
 }

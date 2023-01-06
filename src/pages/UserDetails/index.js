@@ -5,7 +5,7 @@ import axios from "axios";
 import style from "./style.module.css"
 
 export function UserDetails() {
-  const { userLogin } = useParams();
+  const { login } = useParams();
   const [gitHubUser, setGitHubUser] = useState([]);
   const userCreationDate = gitHubUser.created_at; //tried gitHubUser.created_at.slice(0, 10) to show only the date and not the hours, but the page stopped rendering.
 
@@ -13,7 +13,7 @@ export function UserDetails() {
     async function fetchGitHubUser() {
       try {
         const response = await axios.get(
-          `https://api.github.com/users/${userLogin}`
+          `https://api.github.com/users/${login}`
         );
         setGitHubUser({ ...response.data });
       } catch (error) {

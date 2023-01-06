@@ -4,7 +4,7 @@ import style from "./style.module.css"
 const PaginationSelector = ({ itensPerPage, setItensPerPage }) => {
     return (
       <div className={style.select}>
-        <span>Itens per page: </span>
+        <span>Users per page: </span>
         <select
           value={itensPerPage}
           onChange={(e) => setItensPerPage(Number(e.target.value))}

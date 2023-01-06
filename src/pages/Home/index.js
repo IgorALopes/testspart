@@ -17,13 +17,12 @@ export function Home() {
     const endIndex = startIndex + itensPerPage
     const currentUsers = gitHubUsers.slice(startIndex, endIndex)
 
-    let number = 0
     
     useEffect(() => {
         async function fetchGitHubUsers() {
             try {
                 const response = await axios.get(
-                  `https://api.github.com/users?since=${number}`
+                  "https://api.github.com/users"
                 );
 
                 setgitHubUsers([...response.data])

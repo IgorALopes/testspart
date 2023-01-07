@@ -5,9 +5,10 @@ import axios from "axios";
 import style from "./style.module.css"
 
 export function UserDetails() {
-  const { login } = useParams();
   const [gitHubUser, setGitHubUser] = useState([]);
+  const [gitHubUserRepos, setGitHubUserRepos] = useState([]);
   const userCreationDate = gitHubUser.created_at; //tried gitHubUser.created_at.slice(0, 10) to show only the date and not the hours, but the page stopped rendering.
+  const { login } = useParams();
 
   useEffect(() => {
     async function fetchGitHubUser() {
@@ -15,12 +16,26 @@ export function UserDetails() {
         const response = await axios.get(
           `https://api.github.com/users/${login}`
         );
-        setGitHubUser({ ...response.data });
+        setGitHubUser({...response.data });
       } catch (error) {
         console.log(error);
       }
     }
     fetchGitHubUser();
+  }, []);
+
+  useEffect(() => {
+    async function fetchGitHubUserRepos() {
+      try {
+        const response = await axios.get(
+          `https://api.github.com/users/${login}/repos`
+        );
+        setGitHubUserRepos([ ...response.data ]);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchGitHubUserRepos();
   }, []);
 
   return (
@@ -41,6 +56,32 @@ export function UserDetails() {
             {gitHubUser.login}'s GitHub Profile
           </a>
         </p>
+        <h3>Repositories:</h3>
+        <table>
+          <tr>
+            <th>ID</th>
+            <th>Repository</th>
+            <th>url</th>
+          </tr>
+          {console.log(gitHubUserRepos)}
+          {gitHubUserRepos.map((currentRepo) => {
+            return (
+              <tr>
+                <td>{currentRepo.id}</td>
+                <td>{currentRepo.name}</td>
+                <td>
+                  <a
+                    href={currentRepo.html_url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {currentRepo.html_url}
+                  </a>
+                </td>
+              </tr>
+            );
+          })}
+        </table>
         <Link to="/">
           <button type="button">Back</button>
         </Link>

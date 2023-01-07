@@ -8,7 +8,7 @@ import { UserCard } from "../../Components/UserCard/UserCard"
 
 export function Home() {
     
-    const [gitHubUsers, setgitHubUsers] = useState([])
+    const [gitHubUsers, setgitHubUsers] = useState([]);
     const [itensPerPage, setItensPerPage] = useState(5)
     const [currentPage, setCurrentPage] = useState(0)
     

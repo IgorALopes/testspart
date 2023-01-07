@@ -7,7 +7,7 @@ import style from "./style.module.css"
 export function UserDetails() {
   const [gitHubUser, setGitHubUser] = useState([]);
   const [gitHubUserRepos, setGitHubUserRepos] = useState([]);
-  const userCreationDate = gitHubUser.created_at; //tried gitHubUser.created_at.slice(0, 10) to show only the date and not the hours, but the page stopped rendering.
+  const userCreationDate = (gitHubUser.created_at || []).slice(0, 10);
   const { login } = useParams();
 
   useEffect(() => {
